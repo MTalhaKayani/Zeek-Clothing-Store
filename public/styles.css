@@ -1,21 +1,76 @@
- body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 20px;
-    background-color: #f8f8f8;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F5F6F5; /* Pearl white */
 }
-h1 {
-    color: #2c3e50;
+
+.navbar {
+    background-color: #2E3A2C; /* Dark army green */
 }
-h2 {
-    color: #34495e;
+
+.navbar-brand, .nav-link {
+    color: #D4A017 !important; /* Gold */
 }
-.product {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    display: inline-block;
+
+.nav-link:hover {
+    color: #F5F6F5 !important; /* Pearl white */
+}
+
+.dropdown-menu {
+    background-color: #2E3A2C; /* Dark army green */
+}
+
+.dropdown-item {
+    color: #D4A017; /* Gold */
+}
+
+.dropdown-item:hover {
+    background-color: #6B7280; /* Grey */
+    color: #F5F6F5; /* Pearl white */
+}
+
+.carousel img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.product-card {
     background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.product-card img {
+    max-width: 100%;
+    height: auto;
     border-radius: 5px;
+}
+
+.product-card h3 {
+    font-size: 1.25rem;
+    margin: 10px 0;
+    color: #2E3A2C; /* Dark army green */
+}
+
+.product-card p {
+    color: #6B7280; /* Grey */
+    margin: 5px 0;
+}
+
+.product-card .btn {
+    background-color: #D4A017; /* Gold */
+    border-color: #D4A017;
+}
+
+.product-card .btn:hover {
+    background-color: #2E3A2C; /* Dark army green */
+    border-color: #2E3A2C;
+}
+
+footer {
+    background-color: #2E3A2C; /* Dark army green */
+    color: #D4A017; /* Gold */
+    margin-top: 40px;
 }
