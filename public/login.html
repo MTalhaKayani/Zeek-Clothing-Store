@@ -1,0 +1,161 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup - Zeek Clothing Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Zeek Clothing Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/shop" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Shop
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="shopDropdown">
+                            <li><a class="dropdown-item" href="/shop?category=Men">Men</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Tops">Tops</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Bottoms">Bottoms</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Accessories">Accessories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/shop?category=Women">Women</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Tops">Tops</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Bottoms">Bottoms</a></li>
+                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Accessories">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/login">Login/Signup</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <i class="bi bi-cart"></i>
+                            <span id="cart-count" class="badge bg-gold">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login/Signup Section -->
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Login or Signup</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Login</h4>
+                <form id="login-form">
+                    <div class="mb-3">
+                        <label for="login-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="login-username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="login-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <div id="login-message" class="mt-3"></div>
+            </div>
+            <div class="col-md-6">
+                <h4>Signup</h4>
+                <p>Sign up to receive a 10% off coupon!</p>
+                <form id="signup-form">
+                    <div class="mb-3">
+                        <label for="signup-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="signup-username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signup-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="signup-email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="signup-password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="signup-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                </form>
+                <div id="signup-message" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-white text-center py-3">
+        <p>&copy; 2025 Zeek Clothing Store. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('login-message').innerText = data.message;
+                if (data.success) {
+                    if (data.role === 'admin') {
+                        alert('Welcome, Admin!');
+                    } else {
+                        alert('Welcome, User!');
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('login-message').innerText = 'Login failed';
+            });
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('signup-message').innerText = data.message;
+                document.getElementById('signup-form').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('signup-message').innerText = 'Signup failed';
+            });
+        });
+    </script>
+</body>
+</html>
