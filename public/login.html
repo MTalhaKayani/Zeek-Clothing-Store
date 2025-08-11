@@ -1,161 +1,160 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Signup - Zeek Clothing Store</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ZEEK – Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#171717; --gold:#d4a017; --gold-strong:#c1900f;
+      --muted:#e5e5e5; --card:#fff; --paper:#f7f4ee;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html,body{height:100%; font-family:'Roboto',sans-serif; background:var(--paper); color:var(--ink); overflow:hidden;}
+
+    .bg-slider{ position:fixed; inset:0; z-index:0; filter:blur(8px) brightness(.95); opacity:.90; transform:scale(1.06); pointer-events:none; }
+    .bg-slide{ position:absolute; inset:0; background-position:center; background-size:cover; will-change:opacity, transform; }
+    .bg1{ background-image:url('/images/hero/hero1-leaves.png'); animation:fade1 6s linear infinite; }
+    .bg2{ background-image:url('/images/hero/hero2-men.png');   animation:fade2 6s linear infinite; }
+    @keyframes fade1{ 0%{opacity:1;transform:translateX(0)}40%{opacity:1;transform:translateX(-2%)}50%{opacity:0;transform:translateX(-4%)}90%{opacity:0;transform:translateX(2%)}100%{opacity:1;transform:translateX(0)} }
+    @keyframes fade2{ 0%{opacity:0;transform:translateX(4%)}40%{opacity:0;transform:translateX(2%)}50%{opacity:1;transform:translateX(0)}90%{opacity:1;transform:translateX(-2%)}100%{opacity:0;transform:translateX(-4%)} }
+
+    .wrap{ position:relative; z-index:1; height:100vh; display:flex; align-items:stretch; justify-content:center; }
+    .dialog{ width:min(700px,65vw); height:100vh; display:flex; overflow:hidden; background:var(--card); border-right:1px solid #eaeaea; border-left:1px solid #eaeaea; }
+    .photoPane{ position:relative; flex:0 0 52%; display:flex; align-items:stretch; justify-content:center; background:transparent; overflow:hidden; }
+    .photo{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; background:#fff; border-right:1px solid var(--muted); }
+    .formPane{ flex:1; background:#fff; height:100%; display:flex; align-items:center; justify-content:center; padding:22px; }
+    .card{ width:100%; max-width:360px; }
+
+    .brand-logo{ display:block; margin:0 auto 10px; height:100px; width:300px; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,.12)); cursor:pointer; }
+    .sub{ text-align:center; color:#555; font-size:.92rem; margin-bottom:16px; }
+
+    label{ display:block; font-weight:700; font-size:.92rem; margin:10px 0 6px; }
+    .input{ width:100%; padding:10px 12px; border:1px solid #d6d6d6; border-radius:12px; font-size:14px; transition:border-color .15s, box-shadow .15s; }
+    .input:focus{ outline:0; border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,160,23,.18); }
+
+    .row-half{ display:flex; gap:10px; margin:8px 0 12px; }
+    .forgot{ width:50%; min-width:120px; border:1px solid #e7e7e7; background:#f7f7f7; color:#333; border-radius:10px; padding:7px 9px; font-size:12px; cursor:pointer; }
+    .forgot:hover{ background:#eee; }
+
+    .btn{ width:100%; padding:11px; border:0; border-radius:12px; cursor:pointer; font-weight:800; font-size:14px; margin:6px 0; transition: transform .05s, background .15s, box-shadow .15s; }
+    .btn:active{ transform:translateY(1px); }
+    .btn-primary{ background:var(--gold); color:#fff; box-shadow:0 6px 14px rgba(212,160,23,.22); }
+    .btn-primary:hover{ background:var(--gold-strong); }
+    .btn-secondary{ background:#f4f4f4; color:#111; border:1px solid #e6e6e6; }
+    .btn-secondary:hover{ background:#ededed; }
+
+    .btn-compact { padding: 7px; }
+    .footer-actions{ margin-top:8px; display:grid; gap:6px; }
+
+    @media (max-width:980px){
+      .dialog{ flex-direction:column; height:100vh; width:100vw; border-left:0; border-right:0; }
+      .photoPane{ flex:0 0 auto; height:40vh; }
+      .photo{ border-right:0; border-bottom:1px solid var(--muted); }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Zeek Clothing Store</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/shop" id="shopDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Shop
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="shopDropdown">
-                            <li><a class="dropdown-item" href="/shop?category=Men">Men</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Tops">Tops</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Bottoms">Bottoms</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Accessories">Accessories</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/shop?category=Women">Women</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Tops">Tops</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Bottoms">Bottoms</a></li>
-                            <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Accessories">Accessories</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/login">Login/Signup</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">
-                            <i class="bi bi-cart"></i>
-                            <span id="cart-count" class="badge bg-gold">0</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Login/Signup Section -->
-    <div class="container my-5">
-        <h2 class="text-center mb-4">Login or Signup</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Login</h4>
-                <form id="login-form">
-                    <div class="mb-3">
-                        <label for="login-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="login-username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="login-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="login-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </form>
-                <div id="login-message" class="mt-3"></div>
+  <div class="bg-slider">
+    <div class="bg-slide bg1"></div>
+    <div class="bg-slide bg2"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="dialog">
+      <div class="photoPane">
+        <img src="/images/login/loginpage.png" alt="Zeek apparel visual" class="photo">
+      </div>
+
+      <div class="formPane">
+        <div class="card">
+          <a href="/" aria-label="Go to homepage">
+            <img src="/images/logo/zeekname.png" alt="ZEEK Logo" class="brand-logo">
+          </a>
+          <p class="sub">Welcome back</p>
+
+          <form id="loginForm" novalidate>
+            <label for="email">Email</label>
+            <input id="email" name="email" class="input" type="email" placeholder="Enter your email" autocomplete="email" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password" class="input" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+
+            <div class="row-half">
+              <button type="button" class="forgot" id="forgotBtn">Forgot Password?</button>
             </div>
-            <div class="col-md-6">
-                <h4>Signup</h4>
-                <p>Sign up to receive a 10% off coupon!</p>
-                <form id="signup-form">
-                    <div class="mb-3">
-                        <label for="signup-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="signup-username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="signup-email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="signup-email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="signup-password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="signup-password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Signup</button>
-                </form>
-                <div id="signup-message" class="mt-3"></div>
-            </div>
+
+            <button type="submit" class="btn btn-primary btn-compact">Sign In</button>
+          </form>
+
+          <button class="btn btn-primary btn-compact" onclick="location.href='signup.html'">Sign Up</button>
+
+          <div class="footer-actions">
+            <button class="btn btn-primary btn-compact" onclick="location.href='/'">← Back to homepage</button>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer class="text-white text-center py-3">
-        <p>&copy; 2025 Zeek Clothing Store. All rights reserved.</p>
-    </footer>
+<script>
+(async function () {
+  const form = document.getElementById('loginForm');
+  if (!form) return;
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-    <script src="script.js"></script>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
+  async function getCsrf() {
+    const r = await fetch('/api/csrf-token', { credentials: 'include' });
+    if (!r.ok) throw new Error('Failed to fetch CSRF');
+    const j = await r.json();
+    return j.csrfToken;
+  }
 
-            fetch('/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('login-message').innerText = data.message;
-                if (data.success) {
-                    if (data.role === 'admin') {
-                        alert('Welcome, Admin!');
-                    } else {
-                        alert('Welcome, User!');
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('login-message').innerText = 'Login failed';
-            });
-        });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        document.getElementById('signup-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('signup-username').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-            fetch('/api/signup', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('signup-message').innerText = data.message;
-                document.getElementById('signup-form').reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('signup-message').innerText = 'Signup failed';
-            });
-        });
-    </script>
+    if (!email || !password) {
+      alert('Please enter email and password.');
+      return;
+    }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Signing in…'; }
+
+    try {
+      const csrf = await getCsrf();
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrf },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        alert(data.message || 'Login failed');
+        return;
+      }
+
+      // success → go to secure dashboard
+      window.location.href = '/dashboard';
+    } catch (err) {
+      console.error(err);
+      alert('Network error while logging in.');
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Sign In'; }
+    }
+  });
+
+  document.getElementById('forgotBtn')?.addEventListener('click', function(){
+    alert('Password reset link will be sent to your email/phone (stub).');
+  });
+})();
+</script>
 </body>
 </html>

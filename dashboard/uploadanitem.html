@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Upload an item — ZEEK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    body{margin:0;font-family:'Roboto',sans-serif;background:#f6f6f8;color:#131316}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e9e9ee;padding:12px 16px}
+    .bar{max-width:1000px;margin:0 auto;display:flex;gap:10px;align-items:center}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-right:auto}
+    .brand img{height:34px}
+    .btn{border:1px solid #e9e9ee;background:#fff;padding:8px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+    .btn-primary{background:#d4a017;color:#fff;border:none}
+    main{max-width:1000px;margin:24px auto;padding:0 16px;display:grid;gap:16px}
+    .card{background:#fff;border:1px solid #e9e9ee;border-radius:12px;padding:16px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row label{font-weight:700;margin-top:6px}
+    input,textarea,select{width:100%;padding:10px;border:1px solid #e9e9ee;border-radius:10px}
+    .muted{color:#8b8f98}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <a class="brand" href="/dashboard"><img src="/images/logo/zeekname.png" alt="ZEEK"> <strong>Upload an item</strong></a>
+      <a class="btn" href="/dashboard">← Dashboard</a>
+      <button id="logoutBtn" class="btn">Logout</button>
+      <a class="btn btn-primary" href="/">Home</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 style="margin:0 0 6px 0">Create product</h2>
+      <p class="muted">Add basic info now; we’ll wire storage and DB later.</p>
+    </section>
+
+    <form class="card" id="uploadForm">
+      <div class="row">
+        <div>
+          <label>Product Name</label>
+          <input name="name" required/>
+        </div>
+        <div>
+          <label>Price (PKR)</label>
+          <input name="price" type="number" step="1" min="0" required/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Category</label>
+          <select name="category">
+            <option>Women</option><option>Men</option><option>Apparels</option><option>Catalogue</option>
+          </select>
+        </div>
+        <div>
+          <label>Subcategory</label>
+          <input name="subcategory" placeholder="Lawn, Cotton, Organza, …"/>
+        </div>
+      </div>
+
+      <div>
+        <label>Description</label>
+        <textarea name="description" rows="4" placeholder="Short description"></textarea>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Type</label>
+          <select name="type">
+            <option>STITCHED</option>
+            <option>UNSTITCHED</option>
+            <option>APPAREL</option>
+            <option>OTHER</option>
+          </select>
+        </div>
+        <div>
+          <label>Status</label>
+          <select name="status">
+            <option>LIVE</option>
+            <option>DRAFT</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label>Images (max 6 for now — just pick files; backend wiring later)</label>
+        <input name="images" type="file" accept="image/*" multiple />
+      </div>
+
+      <div>
+        <label>Size Chart (optional image)</label>
+        <input name="sizeChart" type="file" accept="image/*" />
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Stitched sizes (comma separated, e.g. S,M,L,XL)</label>
+          <input name="sizes" placeholder="S,M,L,XL"/>
+        </div>
+        <div>
+          <label>Single stock (for non-stitched)</label>
+          <input name="singleStock" type="number" min="0" step="1" placeholder="e.g. 10"/>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:12px">
+        <button class="btn btn-primary" type="submit">Save (stub)</button>
+        <button class="btn" type="reset">Reset</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    async function csrf(){ const r = await fetch('/api/csrf-token',{credentials:'include'}); return (await r.json()).csrfToken; }
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      const token = await csrf();
+      await fetch('/api/logout',{method:'POST',headers:{'X-CSRF-Token':token},credentials:'include'});
+      location.href='/login';
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Stub: this will POST product details + files.\nWe’ll wire it to storage/DB in the next phase.');
+    });
+  </script>
+</body>
+</html>

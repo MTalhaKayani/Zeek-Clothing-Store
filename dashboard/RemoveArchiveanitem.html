@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Remove / Archive — ZEEK</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;font-family:'Roboto',sans-serif;background:#f6f6f8;color:#131316}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid #e9e9ee;padding:12px 16px}
+.bar{max-width:1000px;margin:0 auto;display:flex;gap:10px;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-right:auto}
+.brand img{height:34px}
+.btn{border:1px solid #e9e9ee;background:#fff;padding:8px 12px;border-radius:10px;font-weight:700;cursor:pointer}
+.btn-primary{background:#d4a017;color:#fff;border:none}
+main{max-width:1000px;margin:24px auto;padding:0 16px;display:grid;gap:16px}
+.card{background:#fff;border:1px solid #e9e9ee;border-radius:12px;padding:16px}
+input{padding:10px;border:1px solid #e9e9ee;border-radius:10px;width:100%}
+.list{display:grid;gap:8px}
+.item{display:flex;justify-content:space-between;align-items:center;border:1px solid #e9e9ee;border-radius:10px;padding:10px}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="/dashboard"><img src="/images/logo/zeekname.png" alt=""> <strong>Remove / Archive</strong></a>
+    <a class="btn" href="/dashboard">← Dashboard</a>
+    <button id="logoutBtn" class="btn">Logout</button>
+    <a class="btn btn-primary" href="/">Home</a>
+  </div>
+</header>
+<main>
+  <section class="card">
+    <h2 style="margin:0 0 6px">Find product</h2>
+    <input id="q" placeholder="Search by name or SKU (stub)"/>
+  </section>
+
+  <section class="card">
+    <div class="list" id="list">
+      <!-- stub results -->
+      <div class="item">
+        <div><strong>Sample Kurta</strong><div style="color:#8b8f98;font-size:.9rem">SKU: ZK-001</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn">Archive</button>
+          <button class="btn" style="border-color:#ffd2d2;background:#fff3f3">Delete</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+async function csrf(){ const r=await fetch('/api/csrf-token',{credentials:'include'});return (await r.json()).csrfToken; }
+document.getElementById('logoutBtn').addEventListener('click',async()=>{const t=await csrf();await fetch('/api/logout',{method:'POST',headers:{'X-CSRF-Token':t},credentials:'include'});location.href='/login';});
+</script>
+</body></html>

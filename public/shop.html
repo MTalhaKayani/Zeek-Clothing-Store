@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,7 +16,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
@@ -25,6 +25,8 @@
                             Shop
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="shopDropdown">
+                            <li><a class="dropdown-item" href="/shop?category=New Arrivals">New Arrivals</a></li>
+                            <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/shop?category=Men">Men</a></li>
                             <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Tops">Tops</a></li>
                             <li><a class="dropdown-item" href="/shop?category=Men&subcategory=Bottoms">Bottoms</a></li>
@@ -34,6 +36,8 @@
                             <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Tops">Tops</a></li>
                             <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Bottoms">Bottoms</a></li>
                             <li><a class="dropdown-item" href="/shop?category=Women&subcategory=Accessories">Accessories</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/shop?category=Apparels">Apparels</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -42,6 +46,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login/Signup</a>
                     </li>
@@ -56,35 +62,95 @@
         </div>
     </nav>
 
-    <!-- Shop Filters and Products -->
+    <!-- Shop Section -->
     <div class="container my-5">
         <h2 class="text-center mb-4">Shop Our Collection</h2>
-        <div class="mb-4">
-            <label for="categoryFilter">Filter by Category:</label>
-            <select id="categoryFilter" class="form-select d-inline-block w-auto">
-                <option value="">All</option>
-                <option value="Men">Men</option>
-                <option value="Women">Women</option>
-            </select>
-            <label for="subcategoryFilter" class="ms-3">Subcategory:</label>
-            <select id="subcategoryFilter" class="form-select d-inline-block w-auto">
-                <option value="">All</option>
-                <option value="Tops">Tops</option>
-                <option value="Bottoms">Bottoms</option>
-                <option value="Accessories">Accessories</option>
-            </select>
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <h5>Filters</h5>
+                <div class="mb-3">
+                    <label for="category" class="form-label">Category</label>
+                    <select id="category" class="form-select">
+                        <option value="">All</option>
+                        <option value="New Arrivals">New Arrivals</option>
+                        <option value="Men">Men</option>
+                        <option value="Women">Women</option>
+                        <option value="Apparels">Apparels</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="subcategory" class="form-label">Subcategory</label>
+                    <select id="subcategory" class="form-select">
+                        <option value="">All</option>
+                        <option value="Tops">Tops</option>
+                        <option value="Bottoms">Bottoms</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Outerwear">Outerwear</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="products" class="row"></div>
+            </div>
         </div>
-        <div class="row" id="products"></div>
     </div>
 
     <!-- Footer -->
-    <footer class="text-white text-center py-3">
-        <p>&copy; 2025 Zeek Clothing Store. All rights reserved.</p>
+    <footer class="text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Need Help?</h5>
+                    <p>
+                        <i class="bi bi-envelope"></i> <a href="mailto:muhammadtalhashakir@gmail.com">muhammadtalhashakir@gmail.com</a><br>
+                        <i class="bi bi-whatsapp"></i> <a href="https://wa.me/+923093270095">+923093270095</a><br>
+                        <i class="bi bi-clock"></i> 12 PM - 8 PM PST
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Customer Service</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="/delivery">Delivery & Orders</a></li>
+                        <li><a href="/returns">Returns & Exchanges</a></li>
+                        <li><a href="/terms">Terms & Conditions</a></li>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="https://postex.pk/track" target="_blank">Track My Order</a></li>
+                        <li><a href="/payment">Payment Guide</a></li>
+                        <li><a href="/fabric">Fabric Glossary</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Careers</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                    </ul>
+                    <h5>Follow Us</h5>
+                    <p>
+                        <a href="https://instagram.com/zeekclothing" target="_blank"><i class="bi bi-instagram"></i> Instagram</a><br>
+                        <a href="https://facebook.com/zeekclothing" target="_blank"><i class="bi bi-facebook"></i> Facebook</a>
+                    </p>
+                    <p>
+                        <img src="https://via.placeholder.com/50x30?text=Visa" alt="Visa" class="me-2">
+                        <img src="https://via.placeholder.com/50x30?text=MasterCard" alt="MasterCard" class="me-2">
+                        <img src="https://via.placeholder.com/50x30?text=DSS" alt="DSS Compliant" class="me-2">
+                        <img src="https://via.placeholder.com/50x30?text=SSL" alt="Secure SSL">
+                    </p>
+                </div>
+            </div>
+            <p class="text-center mt-3">&copy; 2025 Zeek Clothing Store. All rights reserved.</p>
+        </div>
     </footer>
+
+    <a href="https://wa.me/+923093270095" class="whatsapp-chat" target="_blank">
+        <img src="https://via.placeholder.com/50x50?text=WhatsApp" alt="WhatsApp Chat">
+    </a>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    <script src="script.js"></script>
     <script src="shop.js"></script>
 </body>
 </html>

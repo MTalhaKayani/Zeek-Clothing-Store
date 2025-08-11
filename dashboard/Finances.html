@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Finances — ZEEK</title>
+<style>
+:root{--line:#e9e9ee;--brand:#d4a017}
+body{margin:0;font-family:Roboto,sans-serif;background:#f6f6f8}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line)}
+.bar{max-width:1100px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit}.brand img{height:36px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
+.btn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--brand);border-color:var(--brand);color:#fff}
+main{max-width:1100px;margin:20px auto;padding:0 14px;display:grid;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{border:1px solid var(--line);border-radius:12px;padding:14px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="/dashboard/dashboard.html"><img src="/images/logo/zeekname.png"><strong>Finances</strong></a>
+    <div><span id="whoChip" class="chip">Signed in</span> <button id="logoutBtn" class="btn">Logout</button> <a class="btn btn-primary" href="/dashboard/dashboard.html">Dashboard</a></div>
+  </div>
+</header>
+<main>
+  <div class="card kpis">
+    <div class="kpi"><div>Revenue (Today)</div><h2>₨ 0</h2></div>
+    <div class="kpi"><div>Revenue (MTD)</div><h2>₨ 0</h2></div>
+    <div class="kpi"><div>Orders (MTD)</div><h2>0</h2></div>
+    <div class="kpi"><div>Refunds (MTD)</div><h2>₨ 0</h2></div>
+  </div>
+  <div class="card">
+    <h3 style="margin:0 0 10px">Payouts</h3>
+    <p>Connect payout accounts and view settlements here. (Starter placeholder)</p>
+  </div>
+</main>
+<script>
+(async function(){async function me(){const r=await fetch('/api/me',{credentials:'include'});if(r.status===401){location.href='/login.html';return}return r.json()}async function csrf(){const r=await fetch('/api/csrf-token',{credentials:'include'});return (await r.json()).csrfToken}const info=await me();if(!info)return;document.getElementById('whoChip').textContent=info.user.email||'User';document.getElementById('logoutBtn').addEventListener('click',async()=>{const t=await csrf();await fetch('/api/logout',{method:'POST',headers:{'X-CSRF-Token':t},credentials:'include'});location.href='/login.html';});})();
+</script>
+</body></html>

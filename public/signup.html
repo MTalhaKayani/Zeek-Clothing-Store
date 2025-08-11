@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ZEEK – Sign Up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#171717; --gold:#d4a017; --gold-strong:#c1900f;
+      --muted:#e5e5e5; --card:#fff; --paper:#f7f4ee;
+    }
+    *{box-sizing:border-box; margin:0; padding:0;}
+    html,body{height:100%; font-family:'Roboto',sans-serif; background:var(--paper); color:var(--ink); overflow:hidden;}
+
+    /* Background slider (same as login) */
+    .bg-slider{ position:fixed; inset:0; z-index:0; filter:blur(8px) brightness(.95); opacity:.90; transform:scale(1.06); pointer-events:none; }
+    .bg-slide{ position:absolute; inset:0; background-position:center; background-size:cover; will-change:opacity, transform; }
+    .bg1{ background-image:url('/images/hero/hero1-leaves.png'); animation:fade1 6s linear infinite; }
+    .bg2{ background-image:url('/images/hero/hero2-men.png');   animation:fade2 6s linear infinite; }
+    @keyframes fade1{ 0%{opacity:1;transform:translateX(0)}40%{opacity:1;transform:translateX(-2%)}50%{opacity:0;transform:translateX(-4%)}90%{opacity:0;transform:translateX(2%)}100%{opacity:1;transform:translateX(0)} }
+    @keyframes fade2{ 0%{opacity:0;transform:translateX(4%)}40%{opacity:0;transform:translateX(2%)}50%{opacity:1;transform:translateX(0)}90%{opacity:1;transform:translateX(-2%)}100%{opacity:0;transform:translateX(-4%)} }
+
+    /* Layout (same as login) */
+    .wrap{ position:relative; z-index:1; height:100vh; display:flex; align-items:stretch; justify-content:center; }
+    .dialog{ width:min(700px,65vw); height:100vh; display:flex; overflow:hidden; background:var(--card); border-right:1px solid #eaeaea; border-left:1px solid #eaeaea; }
+    .photoPane{ position:relative; flex:0 0 52%; display:flex; align-items:stretch; justify-content:center; background:transparent; overflow:hidden; }
+    .photo{ position:relative; z-index:1; width:100%; height:100%; object-fit:contain; background:#fff; border-right:1px solid var(--muted); }
+
+    /* Dialogue box */
+    .formPane{ flex:1; background:#fff; height:100%; display:flex; align-items:center; justify-content:center; padding:22px; position:relative; }
+    .card{ width:100%; max-width:360px; }
+    .brand-logo{ display:block; margin:0 auto 10px; height:88px; width:auto; object-fit:contain; filter: drop-shadow(0 1px 3px rgba(0,0,0,.12)); cursor:pointer; }
+    .sub{ text-align:center; color:#555; font-size:.92rem; margin-bottom:16px; }
+
+    label{ display:block; font-weight:700; font-size:.92rem; margin:10px 0 6px; }
+    .input{
+      width:100%; padding:10px 12px; border:1px solid #d6d6d6; border-radius:12px; font-size:14px;
+      transition:border-color .15s, box-shadow .15s; position:relative; z-index:1;
+    }
+    .input:focus{ outline:0; border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,160,23,.18); }
+    .btn{ width:100%; padding:11px; border:0; border-radius:12px; cursor:pointer; font-weight:800; font-size:14px; margin:6px 0; transition: transform .05s, background .15s, box-shadow .15s; }
+    .btn:active{ transform:translateY(1px); }
+    .btn-primary{ background:var(--gold); color:#fff; box-shadow:0 6px 14px rgba(212,160,23,.22); }
+    .btn-primary:hover{ background:var(--gold-strong); }
+    .btn-secondary{ background:#f4f4f4; color:#111; border:1px solid #e6e6e6; }
+    .btn-secondary:hover{ background:#ededed; }
+
+    /* Scroll + icons + popup */
+    .dialog-scroll{ overflow-y:auto; max-height:60vh; scrollbar-gutter:stable; }
+    .field{ margin:8px 0 16px; }
+    .field-wrap{ position:relative; }
+    .icon-left,.icon-right{
+      position:absolute; top:50%; transform:translateY(-50%);
+      font-size:16px; display:none; pointer-events:none; z-index:2; font-weight:bold;
+    }
+    .icon-left{ left:10px; color:red; }     /* Cross red */
+    .icon-right{ right:10px; color:green; } /* Tick green */
+
+    #welcomePopup{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:9999; }
+    #welcomePopup .box{ background:#A9A9A9; color:#000; width:min(420px, 90vw); padding:22px 20px; border-radius:12px; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+
+    @media (max-width:980px){
+      .dialog{ flex-direction:column; height:100vh; width:100vw; border-left:0; border-right:0; }
+      .photoPane{ flex:0 0 auto; height:40vh; }
+      .photo{ border-right:0; border-bottom:1px solid var(--muted); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background (unchanged) -->
+  <div class="bg-slider">
+    <div class="bg-slide bg1"></div>
+    <div class="bg-slide bg2"></div>
+  </div>
+
+  <div class="wrap">
+    <div class="dialog">
+      <!-- Left: image (unchanged) -->
+      <div class="photoPane">
+        <img src="/images/login/loginpage.png" alt="Zeek apparel visual" class="photo">
+      </div>
+
+      <!-- Right: dialogue box -->
+      <div class="formPane">
+        <div class="card">
+          <a href="index.html" aria-label="Go to homepage">
+            <img src="/images/logo/zeekname.png" alt="ZEEK Logo" class="brand-logo">
+          </a>
+          <p class="sub">Welcome Dear Customer</p>
+
+          <form id="signupForm" class="dialog-scroll" novalidate style="font-size:14px; line-height:1.25;">
+            <input type="hidden" name="_csrf" id="csrfToken">
+
+            <!-- 1. Email -->
+            <label for="email">Email</label>
+            <div class="field">
+              <input class="input" type="email" name="email" id="email" required placeholder="you@example.com">
+            </div>
+
+            <!-- 2. Newsletter (one line, ~40% smaller, checkbox left) -->
+            <div class="field" style="margin-top:4px;">
+              <label for="newsletter" style="display:flex; align-items:center; gap:8px; margin:0; font-size:60%; font-weight:700;">
+                <input type="checkbox" id="newsletter" name="newsletter" style="width:16px; height:16px; margin:0;">
+                <span>Subscribe to Newsletter & Offers</span>
+              </label>
+            </div>
+
+            <!-- 3. First Name (auto-capitalize words) -->
+            <label for="firstName">First name</label>
+            <div class="field">
+              <input class="input" type="text" name="firstName" id="firstName" required placeholder="First name" style="text-transform: capitalize;">
+            </div>
+
+            <!-- 4. Last Name (auto-capitalize words) -->
+            <label for="lastName">Last name</label>
+            <div class="field">
+              <input class="input" type="text" name="lastName" id="lastName" required placeholder="Last name" style="text-transform: capitalize;">
+            </div>
+
+            <!-- 5. Contact Number -->
+            <label for="phone">Contact number</label>
+            <div class="field">
+              <input class="input" type="tel" name="phone" id="phone" required placeholder="+92 3xx xxxxxxx">
+            </div>
+
+            <!-- 6. Complete Address (auto-capitalize words) -->
+            <label for="address">Complete address</label>
+            <div class="field">
+              <textarea class="input" name="address" id="address" required placeholder="Street, building, area" rows="2" style="resize:vertical; text-transform: capitalize;"></textarea>
+            </div>
+
+            <!-- 7. City -->
+            <label for="city">City</label>
+            <div class="field">
+              <input class="input" type="text" name="city" id="city" required placeholder="City">
+            </div>
+
+            <!-- 8. Type of address -->
+            <label>Type of address</label>
+            <div class="field" style="display:flex; gap:18px; align-items:center; margin-top:8px;">
+              <label style="display:inline-flex; align-items:center; gap:8px; margin:0;">
+                <input type="checkbox" name="addrHome" id="addrHome"> Home
+              </label>
+              <label style="display:inline-flex; align-items:center; gap:8px; margin:0;">
+                <input type="checkbox" name="addrOffice" id="addrOffice"> Office
+              </label>
+            </div>
+
+            <!-- 9. Zip / Postal -->
+            <label for="zip">Zip / Postal code</label>
+            <div class="field">
+              <input class="input" type="text" name="zip" id="zip" required placeholder="e.g. 54000">
+            </div>
+
+            <!-- 10. Password -->
+            <label for="password">Password</label>
+            <div class="field field-wrap">
+              <input class="input" type="password" name="password" id="password" required placeholder="Create a password" style="padding-left:34px; padding-right:34px;">
+              <span id="pwBad"   class="icon-left">✖</span>
+              <span id="pwGood"  class="icon-right">✔</span>
+            </div>
+            <div id="pwHint" style="display:none; font-size:11px; color:#555; margin:-6px 0 12px 0;">
+              (minimum 8 characters with at least one uppercase letter, one lowercase letter, and one number)
+            </div>
+
+            <!-- 11. Confirm password -->
+            <label for="confirmPassword">Confirm password</label>
+            <div class="field field-wrap" style="margin-bottom:10px;">
+              <input class="input" type="password" name="confirmPassword" id="confirmPassword" required placeholder="Re-type password" style="padding-left:34px; padding-right:34px;">
+              <span id="cpwBad"  class="icon-left">✖</span>
+              <span id="cpwGood" class="icon-right">✔</span>
+            </div>
+
+            <!-- 12. Button -->
+            <button type="submit" class="btn btn-primary">Create account</button>
+            <div style="height:10px;"></div>
+            <button type="button" class="btn btn-secondary" onclick="location.href='login.html'">← Back to Sign In</button>
+          </form>
+        </div>
+
+        <!-- Welcome popup -->
+        <div id="welcomePopup">
+          <div class="box">
+            <img src="/images/logo/zeekname.png" alt="ZEEK" style="height:36px; display:block; margin:0 auto 12px;">
+            <div id="welcomeText" style="font-size:16px; font-weight:600; margin-bottom:4px;">Welcome!</div>
+            <div id="welcomeName" style="font-size:14px;"></div>
+          </div>
+        </div>
+      </div>
+      <!-- End dialogue box -->
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const $ = (s)=>document.querySelector(s);
+      const form = $('#signupForm');
+      const email = $('#email');
+      const firstName = $('#firstName');
+      const lastName = $('#lastName');
+      const phone = $('#phone');
+      const address = $('#address');
+      const city = $('#city');
+      const zip = $('#zip');
+      const addrHome = $('#addrHome');
+      const addrOffice = $('#addrOffice');
+      const newsletter = $('#newsletter');
+
+      const password = $('#password');
+      const confirmPassword = $('#confirmPassword');
+      const pwBad = $('#pwBad'), pwGood = $('#pwGood');
+      const cpwBad = $('#cpwBad'), cpwGood = $('#cpwGood');
+      const pwHint = $('#pwHint');
+      const csrfEl = $('#csrfToken');
+      const popup = $('#welcomePopup');
+      const welcomeText = $('#welcomeText');
+      const welcomeName = $('#welcomeName');
+
+      // Get CSRF token
+      fetch('/api/csrf-token').then(r=>r.json()).then(d=>{
+        if(d && d.csrfToken) csrfEl.value = d.csrfToken;
+      }).catch(()=>{});
+
+      // Show hint only while password is focused
+      password.addEventListener('focus', ()=> pwHint.style.display='block');
+      password.addEventListener('blur',  ()=> pwHint.style.display='none');
+
+      const strongPw = (v)=> /[A-Z]/.test(v) && /[a-z]/.test(v) && /[0-9]/.test(v) && v.length>=8;
+
+      function setBorder(el, color){
+        el.style.borderColor = color || '#d6d6d6';
+        el.style.boxShadow =
+          color==='red'   ? '0 0 0 2px rgba(255,0,0,.15)' :
+          color==='green' ? '0 0 0 2px rgba(0,128,0,.15)' : '';
+      }
+
+      function updatePwUI(){
+        const pw = password.value, cpw = confirmPassword.value;
+        const ok = strongPw(pw);
+        const match = pw && cpw && pw===cpw;
+
+        // icons for password: left red cross if bad, right green tick if good
+        pwBad.style.display  = pw && !ok ? 'block':'none';
+        pwGood.style.display = pw && ok  ? 'block':'none';
+
+        // icons for confirm: require strong + match
+        const okMatch = ok && match;
+        cpwBad.style.display  = cpw && !okMatch ? 'block':'none';
+        cpwGood.style.display = cpw && okMatch  ? 'block':'none';
+
+        if (pw && cpw){
+          const color = okMatch ? 'green' : 'red';
+          setBorder(password, color);
+          setBorder(confirmPassword, color);
+        } else {
+          setBorder(password, '');
+          setBorder(confirmPassword, '');
+        }
+      }
+
+      password.addEventListener('input', updatePwUI);
+      confirmPassword.addEventListener('input', updatePwUI);
+      password.addEventListener('focus', updatePwUI);
+      confirmPassword.addEventListener('focus', updatePwUI);
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+
+        if (!strongPw(password.value) || password.value !== confirmPassword.value) {
+          updatePwUI();
+          alert('Please use a strong password and ensure both passwords match.');
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': csrfEl.value },
+            body: JSON.stringify({
+              email: email.value.trim(),
+              password: password.value,
+              firstName: firstName.value.trim(),
+              lastName: lastName.value.trim(),
+              phone: phone.value.trim(),
+              newsletter: !!newsletter.checked,
+              address: address.value.trim(),
+              city: city.value.trim(),
+              zip: zip.value.trim(),
+              addrType: addrOffice.checked ? 'OFFICE' : 'HOME'
+            })
+          });
+          if (!res.ok) throw new Error('Signup failed');
+
+          // Welcome popup ~2s then redirect
+          welcomeText.textContent = 'Welcome!';
+          welcomeName.textContent = `${firstName.value} ${lastName.value}`.trim();
+          popup.style.display = 'flex';
+          setTimeout(()=>{ window.location.href = '/'; }, 2000);
+        } catch (err) {
+          alert('Signup failed. Please try again.');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

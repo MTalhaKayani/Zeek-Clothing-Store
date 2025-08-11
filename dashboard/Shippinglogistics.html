@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Shipping & Logistics — ZEEK</title>
+<style>
+:root{--line:#e9e9ee}
+body{margin:0;font-family:Roboto,sans-serif;background:#f6f6f8}
+header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line)}
+.bar{max-width:1100px;margin:0 auto;padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:inherit}.brand img{height:36px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;background:#fff}
+.btn{border:1px solid var(--line);background:#fff;padding:8px 12px;border-radius:8px;font-weight:700;cursor:pointer}
+main{max-width:1100px;margin:20px auto;padding:0 14px;display:grid;gap:14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <a class="brand" href="/dashboard/dashboard.html"><img src="/images/logo/zeekname.png"><strong>Shipping & Logistics</strong></a>
+    <div><span id="whoChip" class="chip">Signed in</span> <button id="logoutBtn" class="btn">Logout</button> <a class="btn" href="/dashboard/dashboard.html">Dashboard</a></div>
+  </div>
+</header>
+<main>
+  <div class="card">
+    <h3 style="margin:0 0 10px">Shipments</h3>
+    <table>
+      <thead><tr><th>Shipment #</th><th>Carrier</th><th>Order #</th><th>Status</th></tr></thead>
+      <tbody><tr><td>S-001</td><td>TCS</td><td>1001</td><td>IN TRANSIT</td></tr></tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3 style="margin:0 0 10px">Carriers</h3>
+    <p>Configure carriers and rates here. (Starter)</p>
+  </div>
+</main>
+<script>
+(async function(){async function me(){const r=await fetch('/api/me',{credentials:'include'});if(r.status===401){location.href='/login.html';return}return r.json()}async function csrf(){const r=await fetch('/api/csrf-token',{credentials:'include'});return (await r.json()).csrfToken}const info=await me();if(!info)return;document.getElementById('whoChip').textContent=info.user.email||'User';document.getElementById('logoutBtn').addEventListener('click',async()=>{const t=await csrf();await fetch('/api/logout',{method:'POST',headers:{'X-CSRF-Token':t},credentials:'include'});location.href='/login.html';});})();
+</script>
+</body></html>

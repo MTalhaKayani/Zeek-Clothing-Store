@@ -1,76 +1,74 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #F5F6F5; /* Pearl white */
+    font-family: Arial, sans-serif;
 }
 
 .navbar {
-    background-color: #2E3A2C; /* Dark army green */
+    background-color: #f8f9fa;
+    padding: 1rem 2rem;
 }
 
-.navbar-brand, .nav-link {
-    color: #D4A017 !important; /* Gold */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+    margin: 0 1rem;
 }
 
 .nav-link:hover {
-    color: #F5F6F5 !important; /* Pearl white */
+    color: #FFD700 !important;
 }
 
-.dropdown-menu {
-    background-color: #2E3A2C; /* Dark army green */
+.hero {
+    background-color: #f0f0f0;
+    padding: 3rem 0;
 }
 
-.dropdown-item {
-    color: #D4A017; /* Gold */
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
 }
 
-.dropdown-item:hover {
-    background-color: #6B7280; /* Grey */
-    color: #F5F6F5; /* Pearl white */
-}
-
-.carousel img {
-    max-height: 400px;
-    object-fit: cover;
-}
-
-.product-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-.product-card img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.product-card h3 {
-    font-size: 1.25rem;
-    margin: 10px 0;
-    color: #2E3A2C; /* Dark army green */
-}
-
-.product-card p {
-    color: #6B7280; /* Grey */
-    margin: 5px 0;
-}
-
-.product-card .btn {
-    background-color: #D4A017; /* Gold */
-    border-color: #D4A017;
-}
-
-.product-card .btn:hover {
-    background-color: #2E3A2C; /* Dark army green */
-    border-color: #2E3A2C;
+.hero p {
+    font-size: 1.2rem;
 }
 
 footer {
-    background-color: #2E3A2C; /* Dark army green */
-    color: #D4A017; /* Gold */
-    margin-top: 40px;
+    background-color: #333;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.whatsapp-chat {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.whatsapp-chat img {
+    width: 50px;
+    height: 50px;
+}
+
+.bg-gold {
+    background-color: #FFD700;
+    color: #000;
 }

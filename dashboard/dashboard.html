@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ZEEK — Store Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#131316; --muted:#8b8f98; --card:#ffffff; --paper:#f6f6f8;
+      --line:#e9e9ee; --brand:#d4a017; --brand-strong:#bd8e0f;
+      --soft:rgba(212,160,23,.12); --shadow:0 10px 30px rgba(0,0,0,.08);
+      --shadow-sm:0 6px 16px rgba(0,0,0,.06); --radius:14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:'Roboto',sans-serif;color:var(--ink);background:var(--paper);display:flex;flex-direction:column}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(6px)}
+    .bar{max-width:1200px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit;margin-right:auto}
+    .brand img{height:40px}
+    .brand h1{margin:0;font-family:'Cinzel',serif;font-size:1.25rem;letter-spacing:.3px}
+    .chip{padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:.85rem}
+    .btn{border:1px solid var(--line);background:#fff;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm)}
+    .btn-primary{background:var(--brand);color:#fff;border:none}
+    .btn-primary:hover{background:var(--brand-strong)}
+
+    /* Main */
+    main{max-width:1200px;margin:24px auto;padding:0 16px;display:grid;gap:18px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+
+    /* Search */
+    .search{display:flex;gap:10px}
+    .search input{flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+
+    /* Tiles grid */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .tile{display:flex;gap:12px;padding:16px;border-radius:14px;border:1px solid var(--line);background:#fff;text-decoration:none;color:inherit;box-shadow:var(--shadow-sm);align-items:flex-start}
+    .tile:hover{transform:translateY(-2px);transition:transform .08s}
+    .icon{flex:0 0 44px;height:44px;display:grid;place-items:center;border-radius:12px;background:var(--soft);border:1px solid rgba(212,160,23,.25)}
+    .tile h3{margin:0 0 6px 0;font-size:1rem}
+    .tile p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.25}
+
+    footer{margin-top:auto;padding:22px;text-align:center;color:#797c84;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <a class="brand" href="/" aria-label="Go to homepage">
+        <img src="/images/logo/zeekname.png" alt="ZEEK Logo">
+        <h1>Store Dashboard</h1>
+      </a>
+      <span id="whoChip" class="chip">Signed in</span>
+      <button id="logoutBtn" class="btn">Logout</button>
+      <a class="btn btn-primary" href="/index.html">Home</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="search">
+        <input type="text" id="filter" placeholder="Search tools… (e.g., inventory, returns, sales)">
+        <button class="btn" id="clearFilter" type="button">Clear</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div id="tiles" class="grid">
+        <!-- Upload an item -->
+        <a class="tile" href="/dashboard/Uploadanitem.html" data-keywords="upload item product new add">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 20h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Upload an item</h3>
+            <p>Add a new product with images, price, sizes, and stock.</p>
+          </div>
+        </a>
+
+        <!-- Remove/Archive -->
+        <a class="tile" href="/dashboard/RemoveArchiveanitem.html" data-keywords="remove delete archive hide product">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M20 7H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm0 0-2-3H6L4 7m5 6h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Remove / Archive an item</h3>
+            <p>Deactivate, archive, or permanently remove products.</p>
+          </div>
+        </a>
+
+        <!-- Finances -->
+        <a class="tile" href="/dashboard/Finances.html" data-keywords="finance payout revenue payments">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M6 8h2m8 8h2M7 12v6m5-6v6m5-6v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Finances</h3>
+            <p>Overview of revenue, payouts, fees, and adjustments.</p>
+          </div>
+        </a>
+
+        <!-- Inventory -->
+        <a class="tile" href="/dashboard/inventoryManagement.html" data-keywords="inventory stock quantity sizes">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4-9 4-9-4zm0 5l9 4 9-4m-9 4v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Inventory Management</h3>
+            <p>Track stock, variants, and low-inventory alerts.</p>
+          </div>
+        </a>
+
+        <!-- Alerts -->
+        <a class="tile" href="/dashboard/AlertsNotifications.html" data-keywords="alerts notifications messages email sms">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 1 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m2 4a2 2 0 0 1-2-2h4a2 2 0 0 1-2 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Alerts / Notifications</h3>
+            <p>Configure low stock, order, and payment notifications.</p>
+          </div>
+        </a>
+
+        <!-- Sales -->
+        <a class="tile" href="/dashboard/SalesManagement.html" data-keywords="sales orders invoices refunds">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9H8L6 6zM8 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm10 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Sales Management</h3>
+            <p>Manage orders, invoices, and refunds.</p>
+          </div>
+        </a>
+
+        <!-- Pending orders -->
+        <a class="tile" href="/dashboard/Pendingorders.html" data-keywords="pending unfulfilled processing shipments pick-pack">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 8v5l3 3M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Pending Orders</h3>
+            <p>Unfulfilled orders ready for pick & pack.</p>
+          </div>
+        </a>
+
+        <!-- Analytics -->
+        <a class="tile" href="/dashboard/Analytics.html" data-keywords="analytics charts trends performance">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19V5m4 14v-6m4 6V7m4 12v-9m4 9H2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Sale Analytics</h3>
+            <p>KPIs, trends, and channel performance.</p>
+          </div>
+        </a>
+
+        <!-- Customers -->
+        <a class="tile" href="/dashboard/Customermanagement.html" data-keywords="customers crm segments loyalty">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M16 14a4 4 0 1 1 6 3.5V20h-6v-2.5A3.5 3.5 0 0 1 16 14zM2 14a4 4 0 1 1 6 3.5V20H2v-2.5A3.5 3.5 0 0 1 2 14zm10-3a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Customer Management</h3>
+            <p>Profiles, segments, and communication opt-ins.</p>
+          </div>
+        </a>
+
+        <!-- Returns -->
+        <a class="tile" href="/dashboard/Returnsexchanges.html" data-keywords="returns exchanges rma replacements">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 10l4-4m0 0 4 4m-4-4v9a5 5 0 0 0 5 5h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Returns & Exchanges</h3>
+            <p>Approve requests and manage RMAs.</p>
+          </div>
+        </a>
+
+        <!-- Shipping -->
+        <a class="tile" href="/dashboard/Shippinglogistics.html" data-keywords="shipping logistics couriers labels tracking">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 7h11v8H3zM14 11h4l3 4h-7v-4zM6 19a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm10 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Shipping & Logistics</h3>
+            <p>Labels, carriers, zones, and tracking.</p>
+          </div>
+        </a>
+
+        <!-- Settings -->
+        <a class="tile" href="/dashboard/Settingsroles.html" data-keywords="settings roles permissions users">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm7-3a7 7 0 0 1-.1 1.2l2.1 1.6-2 3.5-2.5-1a7 7 0 0 1-2 .9l-.4 2.6H9l-.4-2.6a7 7 0 0 1-2-.9l-2.5 1-2-3.5 2.1-1.6A7 7 0 0 1 5 12c0-.4 0-.8.1-1.2L3 9.2l2-3.5 2.5 1a7 7 0 0 1 2-.9L10 3h4l.4 2.6a7 7 0 0 1 2 .9l2.5-1 2 3.5-2.1 1.6c.1.4.2.8.2 1.4z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Settings & Roles</h3>
+            <p>Team access, permissions, and preferences.</p>
+          </div>
+        </a>
+
+        <!-- Employees -->
+        <a class="tile" href="/dashboard/Employeesportal.html" data-keywords="employees portal staff hr tasks">
+          <div class="icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M6 9h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h3>Employees Portal</h3>
+            <p>Tasks, announcements, and internal docs.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© ZEEK — All rights reserved.</footer>
+
+  <script>
+  (async function(){
+    // session chip + logout
+    async function me(){
+      const r = await fetch('/api/me', { credentials:'include' });
+      if (r.status === 401) { location.href = '/login'; return null; }
+      return r.json();
+    }
+    async function csrf(){
+      const r = await fetch('/api/csrf-token', { credentials:'include' });
+      const j = await r.json(); return j.csrfToken;
+    }
+    const info = await me(); if (!info) return;
+    document.getElementById('whoChip').textContent = info.user?.email || 'Signed in';
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      const token = await csrf();
+      await fetch('/api/logout', { method:'POST', headers:{'X-CSRF-Token':token}, credentials:'include' });
+      location.href = '/login';
+    });
+
+    // client-side filter
+    const filter = document.getElementById('filter');
+    const clear = document.getElementById('clearFilter');
+    const tiles = Array.from(document.querySelectorAll('#tiles .tile'));
+    function applyFilter(q){
+      const needle = q.trim().toLowerCase();
+      tiles.forEach(t => {
+        const text = (t.innerText + ' ' + (t.dataset.keywords||'')).toLowerCase();
+        t.style.display = (!needle || text.includes(needle)) ? '' : 'none';
+      });
+    }
+    filter.addEventListener('input', () => applyFilter(filter.value));
+    clear.addEventListener('click', () => { filter.value = ''; applyFilter(''); filter.focus(); });
+  })();
+  </script>
+</body>
+</html>
